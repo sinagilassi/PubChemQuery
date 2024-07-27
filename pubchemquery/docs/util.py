@@ -5,7 +5,7 @@
 import os
 import json
 # local
-from config import CID_FILE_PREFIX
+from .config import CID_FILE_PREFIX
 
 
 class CoreUtility():

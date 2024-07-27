@@ -1,2 +1,2 @@
-from docs.api import PubChemAPI
-from docs.config import __version__
+from .api import PubChemAPI
+from .config import __version__

@@ -6,13 +6,12 @@ import requests
 import os
 import json
 import io
-from PIL import Image
 import time
 
 # local
-from docs.config import CID_FILE_PREFIX
-from docs.util import UtilityAPI
-from docs.util import CoreUtility
+from .config import CID_FILE_PREFIX
+from .util import UtilityAPI
+from .util import CoreUtility
 
 
 class PubChemAPI:
@@ -424,7 +423,7 @@ class PubChemAPI:
             print(e)
 
     @staticmethod
-    def get_cid_by_name(name):
+    def get_cid_by_name(name, name_type='word'):
         '''
         Get cid by searching name
 
@@ -432,14 +431,16 @@ class PubChemAPI:
         ----------
         name : str
             compound name (https://pubchem.ncbi.nlm.nih.gov/)
+        name_type : str
+            word (small part of molecule), complete (exact molecule)
 
         Returns
         -------
-        str
-            cid list 
+        list
+            cid  
         '''
         try:
-            _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{name}/cids/TXT?name_type=word'
+            _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{name}/cids/TXT?name_type={name_type}'
 
             if len(str(name)) > 0:
                 res = requests.get(_url)
