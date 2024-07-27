@@ -7,6 +7,7 @@ import os
 import json
 import io
 import time
+from PIL import Image
 
 # local
 from .config import CID_FILE_PREFIX
@@ -19,9 +20,12 @@ class PubChemAPI:
     load data from https://pubchem.ncbi.nlm.nih.gov/
     based on PUG REST
     '''
+    _compound_cid = 0
+    _compound_name = ''
 
-    def __init__(self):
-        pass
+    def __init__(self, compound_cid, compound_name):
+        self._compound_cid = compound_cid
+        self._compound_name = compound_name
 
     identity_mode = {
         0: 'same_connectivity',
@@ -32,6 +36,23 @@ class PubChemAPI:
         5: 'nonconflicting_stereo',
         6: 'same_isotope_nonconflicting_stereo'
     }
+
+    # property
+    @property
+    def compound_cid(self):
+        return self._compound_cid
+
+    @compound_cid.setter
+    def compound_cid(self, value):
+        self._compound_cid = value
+
+    @property
+    def compound_name(self):
+        return self._compound_name
+
+    @compound_name.setter
+    def compound_name(self, value):
+        self._compound_name = value
 
     @staticmethod
     def get_mat_by_cid(cid, file_format='JSON', record_type='3d', read=False, save=False, location=''):
@@ -423,7 +444,7 @@ class PubChemAPI:
             print(e)
 
     @staticmethod
-    def get_cid_by_name(name, name_type='word'):
+    def get_cid_by_name(name, name_type='word') -> list[str]:
         '''
         Get cid by searching name
 
@@ -555,7 +576,7 @@ class PubChemAPI:
         cid : str
             compound id
         image_size : str
-            300, 500, 1000, 2000
+            small, large, 250x250
 
         Returns
         -------
@@ -566,10 +587,10 @@ class PubChemAPI:
             # check
             if len(name) > 0:
                 _name = name.strip()
-                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{_name}/PNG'
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{_name}/PNG?record_type=2d&image_size={image_size}'
             elif cid != 0:
                 _cid = str(cid).strip()
-                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/PNG'
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/PNG?record_type=2d&image_size={image_size}'
 
             res = requests.get(_url)
             # check
