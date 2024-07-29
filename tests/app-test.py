@@ -13,5 +13,13 @@ import pubchemquery as pcq
 # print(image)
 
 # make a compound
-compound = pcq.compound(241)
+cid = 2244
+# compound = pcq.compound(cid)
+# name
+name = '2-acetyloxybenzoic acid'
+compound = pcq.compound(name=name)
 print(compound)
+# properties
+print(compound.InChI)
+print(compound.InChIKey)
+print(compound.IUPACName)

@@ -90,10 +90,33 @@ def compound(cid=0, name=''):
     try:
         # compound obj
         if cid != 0:
-            # name
-            compound_name = PubChemAPI.get_properties_by_cid(
-                cid, ['IUPACName'])
-            compound_obj = PubChemAPI(cid, compound_name)
-        return compound_obj
+            # check
+            cid = str(cid).strip()
+            # check compound name
+            compound_obj = PubChemAPI(cid, '')
+            # update properties
+            compound_obj.update_properties()
+            # return
+            return compound_obj
+        elif name != '':
+            # check
+            name = str(name).strip()
+            # get cid
+            cid = PubChemAPI.get_cid_by_name(name, name_type='complete')
+            print(cid)
+            # check
+            if len(cid) == 1:
+                # check compound name
+                compound_obj = PubChemAPI(cid, name)
+                # check
+                if compound_obj:
+                    # update properties
+                    compound_obj.update_properties()
+                # return
+                return compound_obj
+            else:
+                raise Exception(f"compound {name} not found!")
+        else:
+            raise Exception(f"cid/name format is not valid!")
     except Exception as e:
         print(e)

@@ -20,8 +20,54 @@ class PubChemAPI:
     load data from https://pubchem.ncbi.nlm.nih.gov/
     based on PUG REST
     '''
+    # compound id
     _compound_cid = 0
     _compound_name = ''
+
+    # compound properties
+    prop = {
+        "MolecularFormula": None,
+        "MolecularWeight": None,
+        "CanonicalSMILES": None,
+        "IsomericSMILES": None,
+        "InChI": None,
+        "InChIKey": None,
+        "IUPACName": None,
+        "Title": None,
+        "XLogP": None,
+        "ExactMass": None,
+        "MonoisotopicMass": None,
+        "TPSA": None,
+        "Complexity": None,
+        "Charge": None,
+        "HBondDonorCount": None,
+        "HBondAcceptorCount": None,
+        "RotatableBondCount": None,
+        "HeavyAtomCount": None,
+        "IsotopeAtomCount": None,
+        "AtomStereoCount": None,
+        "DefinedAtomStereoCount": None,
+        "UndefinedAtomStereoCount": None,
+        "BondStereoCount": None,
+        "DefinedBondStereoCount": None,
+        "UndefinedBondStereoCount": None,
+        "CovalentUnitCount": None,
+        "Volume3D": None,
+        "XStericQuadrupole3D": None,
+        "YStericQuadrupole3D": None,
+        "ZStericQuadrupole3D": None,
+        "FeatureCount3D": None,
+        "FeatureAcceptorCount3D": None,
+        "FeatureDonorCount3D": None,
+        "FeatureAnionCount3D": None,
+        "FeatureCationCount3D": None,
+        "FeatureRingCount3D": None,
+        "FeatureHydrophobeCount3D": None,
+        "ConformerModelRMSD3D": None,
+        "EffectiveRotorCount3D": None,
+        "ConformerCount3D": None,
+        "Fingerprint2D": None
+    }
 
     def __init__(self, compound_cid, compound_name):
         self._compound_cid = compound_cid
@@ -53,6 +99,312 @@ class PubChemAPI:
     @compound_name.setter
     def compound_name(self, value):
         self._compound_name = value
+
+    @property
+    def MolecularFormula(self):
+        return self.prop["MolecularFormula"]
+
+    @property
+    def MolecularWeight(self):
+        return self.prop["MolecularWeight"]
+
+    @property
+    def CanonicalSMILES(self):
+        return self.prop["CanonicalSMILES"]
+
+    @property
+    def IsomericSMILES(self):
+        return self.prop["IsomericSMILES"]
+
+    @property
+    def InChI(self):
+        return self.prop["InChI"]
+
+    @property
+    def InChIKey(self):
+        return self.prop["InChIKey"]
+
+    @property
+    def IUPACName(self):
+        return self.prop["IUPACName"]
+
+    @property
+    def Title(self):
+        return self.prop["Title"]
+
+    @property
+    def XLogP(self):
+        return self.prop["XLogP"]
+
+    @property
+    def ExactMass(self):
+        return self.prop["ExactMass"]
+
+    @property
+    def MonoisotopicMass(self):
+        return self.prop["MonoisotopicMass"]
+
+    @property
+    def TPSA(self):
+        return self.prop["TPSA"]
+
+    @property
+    def Complexity(self):
+        return self.prop["Complexity"]
+
+    @property
+    def Charge(self):
+        return self.prop["Charge"]
+
+    @property
+    def HBondDonorCount(self):
+        return self.prop["HBondDonorCount"]
+
+    @property
+    def HBondAcceptorCount(self):
+        return self.prop["HBondAcceptorCount"]
+
+    @property
+    def RotatableBondCount(self):
+        return self.prop["RotatableBondCount"]
+
+    @property
+    def HeavyAtomCount(self):
+        return self.prop["HeavyAtomCount"]
+
+    @property
+    def IsotopeAtomCount(self):
+        return self.prop["IsotopeAtomCount"]
+
+    @property
+    def AtomStereoCount(self):
+        return self.prop["AtomStereoCount"]
+
+    @property
+    def DefinedAtomStereoCount(self):
+        return self.prop["DefinedAtomStereoCount"]
+
+    @property
+    def UndefinedAtomStereoCount(self):
+        return self.prop["UndefinedAtomStereoCount"]
+
+    @property
+    def BondStereoCount(self):
+        return self.prop["BondStereoCount"]
+
+    @property
+    def DefinedBondStereoCount(self):
+        return self.prop["DefinedBondStereoCount"]
+
+    @property
+    def UndefinedBondStereoCount(self):
+        return self.prop["UndefinedBondStereoCount"]
+
+    @property
+    def CovalentUnitCount(self):
+        return self.prop["CovalentUnitCount"]
+
+    @property
+    def Volume3D(self):
+        return self.prop["Volume3D"]
+
+    @property
+    def XStericQuadrupole3D(self):
+        return self.prop["XStericQuadrupole3D"]
+
+    @property
+    def YStericQuadrupole3D(self):
+        return self.prop["YStericQuadrupole3D"]
+
+    @property
+    def ZStericQuadrupole3D(self):
+        return self.prop["ZStericQuadrupole3D"]
+
+    @property
+    def FeatureCount3D(self):
+        return self.prop["FeatureCount3D"]
+
+    @property
+    def FeatureAcceptorCount3D(self):
+        return self.prop["FeatureAcceptorCount3D"]
+
+    @property
+    def FeatureDonorCount3D(self):
+        return self.prop["FeatureDonorCount3D"]
+
+    @property
+    def FeatureAnionCount3D(self):
+        return self.prop["FeatureAnionCount3D"]
+
+    @property
+    def FeatureCationCount3D(self):
+        return self.prop["FeatureCationCount3D"]
+
+    @property
+    def FeatureRingCount3D(self):
+        return self.prop["FeatureRingCount3D"]
+
+    @property
+    def FeatureHydrophobeCount3D(self):
+        return self.prop["FeatureHydrophobeCount3D"]
+
+    @property
+    def ConformerModelRMSD3D(self):
+        return self.prop["ConformerModelRMSD3D"]
+
+    @property
+    def EffectiveRotorCount3D(self):
+        return self.prop["EffectiveRotorCount3D"]
+
+    @property
+    def ConformerCount3D(self):
+        return self.prop["ConformerCount3D"]
+
+    @property
+    def Fingerprint2D(self):
+        return self.prop["Fingerprint2D"]
+
+    def get_IUPACName_by_cid(self, format_type='json'):
+        '''
+        Get IUPACName by cid
+
+        Parameters
+        ----------
+        cid : str
+            compound id
+
+        Returns
+        -------
+        IUPACName : str
+            IUPACName
+        '''
+        try:
+            # compound name
+            _compound_name = None
+            # cid
+            _cid = str(self.compound_cid).strip()
+            # format type
+            _format_type = str(format_type).strip().upper()
+            # check
+            if len(_cid) > 0:
+                _properties = 'IUPACName'
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/property/{_properties}/{_format_type}'
+
+                res = requests.get(_url)
+                # check
+                reqResponse = res.status_code
+                # check
+                if reqResponse == 200:
+                    resContent = res.json()
+                    # resContent = resContent.splitlines()
+
+                    dataContent = resContent['PropertyTable']['Properties'][0]
+
+                    _compound_name = dataContent['IUPACName']
+
+                    return _compound_name
+                else:
+                    print('request is refused, try again.')
+                    return _compound_name
+        except Exception as e:
+            print(e)
+
+    def update_properties(self, properties=[], format_type="json"):
+        '''
+        Display compound structure as an image
+
+        Parameters
+        ----------
+        cid : str
+            compound id
+        properties : list
+            List of properties to retrieve. Possible values include:
+            - MolecularFormula: Molecular formula.
+            - MolecularWeight: The molecular weight is the sum of all atomic weights of the constituent atoms in a compound, measured in g/mol. In the absence of explicit isotope labelling, averaged natural abundance is assumed. If an atom bears an explicit isotope label, 100% isotopic purity is assumed at this location.
+            - CanonicalSMILES: Canonical SMILES (Simplified Molecular Input Line Entry System) string.  It is a unique SMILES string of a compound, generated by a “canonicalization” algorithm.
+            - IsomericSMILES: Isomeric SMILES string.  It is a SMILES string with stereochemical and isotopic specifications.
+            - InChI: Standard IUPAC International Chemical Identifier (InChI).  It does not allow for user selectable options in dealing with the stereochemistry and tautomer layers of the InChI string.
+            - InChIKey: Hashed version of the full standard InChI, consisting of 27 characters.
+            - IUPACName: Chemical name systematically determined according to the IUPAC nomenclatures.
+            - Title: The title used for the compound summary page.
+            - XLogP: Computationally generated octanol-water partition coefficient or distribution coefficient. XLogP is used as a measure of hydrophilicity or hydrophobicity of a molecule.
+            - ExactMass: The mass of the most likely isotopic composition for a single molecule, corresponding to the most intense ion/molecule peak in a mass spectrum.
+            - MonoisotopicMass: The mass of a molecule, calculated using the mass of the most abundant isotope of each element.
+            - TPSA: Topological polar surface area, computed by the algorithm described in the paper by Ertl et al.
+            - Complexity: The molecular complexity rating of a compound, computed using the Bertz/Hendrickson/Ihlenfeldt formula.
+            - Charge: The total (or net) charge of a molecule.
+            - HBondDonorCount: Number of hydrogen-bond donors in the structure.
+            - HBondAcceptorCount: Number of hydrogen-bond acceptors in the structure.
+            - RotatableBondCount: Number of rotatable bonds.
+            - HeavyAtomCount: Number of non-hydrogen atoms.
+            - IsotopeAtomCount: Number of atoms with enriched isotope(s)
+            - AtomStereoCount: Total number of atoms with tetrahedral (sp3) stereo [e.g., (R)- or (S)-configuration]
+            - DefinedAtomStereoCount: Number of atoms with defined tetrahedral (sp3) stereo.
+            - UndefinedAtomStereoCount: Number of atoms with undefined tetrahedral (sp3) stereo.
+            - BondStereoCount: Total number of bonds with planar (sp2) stereo [e.g., (E)- or (Z)-configuration].
+            - DefinedBondStereoCount: Number of atoms with defined planar (sp2) stereo.
+            - UndefinedBondStereoCount: Number of atoms with undefined planar (sp2) stereo.
+            - CovalentUnitCount: Number of covalently bound units.
+            - Volume3D: Analytic volume of the first diverse conformer (default conformer) for a compound.
+            - XStericQuadrupole3D: The x component of the quadrupole moment (Qx) of the first diverse conformer (default conformer) for a compound.
+            - YStericQuadrupole3D: The y component of the quadrupole moment (Qy) of the first diverse conformer (default conformer) for a compound.
+            - ZStericQuadrupole3D: The z component of the quadrupole moment (Qz) of the first diverse conformer (default conformer) for a compound.
+            - FeatureCount3D: Total number of 3D features (the sum of FeatureAcceptorCount3D, FeatureDonorCount3D, FeatureAnionCount3D, FeatureCationCount3D, FeatureRingCount3D and FeatureHydrophobeCount3D)
+            - FeatureAcceptorCount3D: Number of hydrogen-bond acceptors of a conformer.
+            - FeatureDonorCount3D: Number of hydrogen-bond donors of a conformer.
+            - FeatureAnionCount3D: Number of anionic centers (at pH 7) of a conformer.
+            - FeatureCationCount3D: Number of cationic centers (at pH 7) of a conformer.
+            - FeatureRingCount3D: Number of rings of a conformer.
+            - FeatureHydrophobeCount3D: Number of hydrophobes of a conformer.
+            - ConformerModelRMSD3D: Conformer sampling RMSD in Å.
+            - EffectiveRotorCount3D: Total number of 3D features (the sum of FeatureAcceptorCount3D, FeatureDonorCount3D, FeatureAnionCount3D, FeatureCationCount3D, FeatureRingCount3D and FeatureHydrophobeCount3D)
+            - ConformerCount3D: The number of conformers in the conformer model for a compound.
+            - Fingerprint2D: Base64-encoded PubChem Substructure Fingerprint of a molecule.
+        format_type : str
+            json, sdf
+
+        Returns
+        -------
+        dict
+            json format properties
+        '''
+        try:
+            # check
+            if len(properties) == 0:
+                properties = [item for item in self.prop.keys()]
+            # cid
+            _cid = str(self.compound_cid).strip()
+            # format type
+            _format_type = str(format_type).strip().upper()
+            # check
+            if len(_cid) > 0:
+                _properties = ",".join(properties)
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/property/{_properties}/{_format_type}'
+
+                res = requests.get(_url)
+                # check
+                reqResponse = res.status_code
+                # check
+                if reqResponse == 200:
+                    resContent = res.json()
+                    # resContent = resContent.splitlines()
+
+                    dataContent = resContent['PropertyTable']['Properties'][0]
+
+                    # Update prop
+                    for key, value in dataContent.items():
+                        if key in self.prop:
+                            self.prop[key] = value
+                            # IUPACName
+                            if key == 'IUPACName':
+                                self.compound_name = value
+
+                    return True
+                else:
+                    print('request is refused, try again.')
+                    return False
+        except Exception as e:
+            print(e)
 
     @staticmethod
     def get_mat_by_cid(cid, file_format='JSON', record_type='3d', read=False, save=False, location=''):
