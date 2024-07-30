@@ -8,7 +8,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
 APP_NAME = 'PubChemQuery'
-VERSION = '1.3.0'
+VERSION = '1.4.0'
 DESCRIPTION = 'A Python Package for Accessing Chemical Information from PubChem (https://pubchem.ncbi.nlm.nih.gov/).'
 LONG_DESCRIPTION = 'PubChemQuery is a Python package that provides a simple and intuitive API for retrieving chemical information from the PubChem database.'
 
