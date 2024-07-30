@@ -1,6 +1,6 @@
 # PubChemQuery
 
-![Downloads](https://img.shields.io/pypi/dm/PubChemQuery) ![PyPI](https://img.shields.io/pypi/v/PubChemQuery) ![Python Version](https://img.shields.io/pypi/pyversions/PubChemQuery.svg) ![License](https://img.shields.io/pypi/l/PubChemQuery) 
+![Downloads](https://img.shields.io/pypi/dm/PubChemQuery) ![PyPI](https://img.shields.io/pypi/v/PubChemQuery) ![Python Version](https://img.shields.io/pypi/pyversions/PubChemQuery.svg) ![License](https://img.shields.io/pypi/l/PubChemQuery) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1hKrOe6K1L_fpd6_izhpVXaA1Zmq6Z8Fo?usp=sharing)
 
 **PubChemQuery:** A Python Package for Accessing Chemical Information from [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
