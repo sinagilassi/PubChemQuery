@@ -1132,7 +1132,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @ staticmethod
+    @staticmethod
     def get_cids_by_formula(formula) -> list:
         '''
         Search for cids according to a formula
@@ -1176,7 +1176,53 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @ staticmethod
+    @staticmethod
+    def get_cids_by_inchi(inchi: str) -> list:
+        '''
+        Search for cids according to a formula
+
+        Parameters
+        ----------
+        inchi : str
+            e.g. InChI=1S/C3H8/c1-3-2/h3H2,1-2H3
+
+        Returns
+        -------
+        list
+            cid list
+        '''
+        try:
+
+            _inchi = str(inchi).strip()
+            if len(_inchi) > 0:
+                # set url
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/cids/TXT'
+                # post
+
+                res = requests.post(_url, data={'inchi': _inchi})
+                # check
+                reqResponse = res.status_code
+                if reqResponse == 200:
+                    resContent = res.text
+                    resContent = str(resContent).splitlines()
+
+                    return resContent
+                elif reqResponse == 400:
+                    print(f"Compound formula '{_inchi}' was not found!")
+                    return []
+                elif reqResponse == 404:
+                    print("Bad request!")
+                    return []
+                else:
+                    raise Exception('request is refused, try again.')
+            else:
+                print(f"{_inchi} format is not valid!")
+                return []
+
+        except Exception as e:
+            print(e)
+
+    @staticmethod
     def get_similar_cids_by_compound_id(val: str, compound_id='cid', similarity_type='fastsimilarity_2d') -> list:
         '''
         Retrieves cids by 2D similarity search

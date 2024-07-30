@@ -1,5 +1,10 @@
 import pubchemquery as pcq
 
+# get a cid by inchi
+cid = pcq.get_cid_by_inchi(
+    'InChI=1S/C6H5NO3/c8-6-3-1-5(2-4-6)7(9)10/h1-4,8H')
+print(cid)
+
 # get a cid by formula
 # cid = pcq.get_cids_by_formula('C6H6')
 # print(type(cid), len(cid))
@@ -41,18 +46,18 @@ cid = 2244
 # compound = pcq.compound(cid)
 # name
 name = '2-acetyloxybenzoic acid'
-compound = pcq.compound(name)
-print(compound)
-# properties
-# InChI
-print(compound.InChI)
-# InChIKey
-print(compound.InChIKey)
-# IUPACName
-print(compound.IUPACName)
-# image
-print(compound.image)
-# similar structure cids
-print(len(compound.similar_structure_cids))
-# dataframe
-print(compound.prop_df())
+# compound = pcq.compound(name)
+# print(compound)
+# # properties
+# # InChI
+# print(compound.InChI)
+# # InChIKey
+# print(compound.InChIKey)
+# # IUPACName
+# print(compound.IUPACName)
+# # image
+# print(compound.image)
+# # similar structure cids
+# print(len(compound.similar_structure_cids))
+# # dataframe
+# print(compound.prop_df())

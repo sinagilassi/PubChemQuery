@@ -13,6 +13,30 @@ def main():
     print(f'PubChemQuery {__version__}')
 
 
+def get_cid_by_inchi(inchi: str):
+    '''
+    Get a cid (only one) by inchi
+
+    Parameters
+    ----------
+    inchi : str
+        e.g. InChI=1S/C3H8/c1-3-2/h3H2,1-2H3
+
+    Returns
+    -------
+    str
+        cid
+    '''
+    try:
+        res = PubChemAPI.get_cids_by_inchi(inchi)
+        if len(res) == 0:
+            return "Not Found!"
+        res = res[0] if len(res) == 1 else res
+        return res
+    except Exception as e:
+        print(e)
+
+
 def get_cids_by_formula(formula):
     '''
     Get all cids by formula
