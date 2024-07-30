@@ -1,6 +1,6 @@
 # PubChemQuery
 
-![Downloads](https://img.shields.io/pypi/dm/PubChemQuery) ![PyPI](https://img.shields.io/pypi/v/PubChemQuery) ![Python Version](https://img.shields.io/pypi/pyversions/PubChemQuery.svg) ![License](https://img.shields.io/pypi/l/PubChemQuery) ![Coverage](https://codecov.io/gh/sinagilassi/PubChemQuery/branch/main/graph/badge.svg)
+![Downloads](https://img.shields.io/pypi/dm/PubChemQuery) ![PyPI](https://img.shields.io/pypi/v/PubChemQuery) ![Python Version](https://img.shields.io/pypi/pyversions/PubChemQuery.svg) ![License](https://img.shields.io/pypi/l/PubChemQuery) ![Coverage](https://codecov.io/gh/sinagilassi/PubChemQuery/branch/main/graph/badge.svg) ![Build Status](https://github.com/sinagilassi/PubChemQuery/actions/workflows/build.yml/badge.svg)
 
 **PubChemQuery:** A Python Package for Accessing Chemical Information from PubChem
 
