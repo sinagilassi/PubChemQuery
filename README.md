@@ -2,7 +2,7 @@
 
 ![Downloads](https://img.shields.io/pypi/dm/PubChemQuery) ![PyPI](https://img.shields.io/pypi/v/PubChemQuery) ![Python Version](https://img.shields.io/pypi/pyversions/PubChemQuery.svg) ![License](https://img.shields.io/pypi/l/PubChemQuery) 
 
-**PubChemQuery:** A Python Package for Accessing Chemical Information from PubChem
+**PubChemQuery:** A Python Package for Accessing Chemical Information from [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
 PubChemQuery is a Python package that provides a simple and intuitive API for retrieving chemical information from the PubChem database. With this package, you can easily fetch chemical data, including:
 
@@ -30,14 +30,21 @@ Easy-to-use API with minimal code required
 
 **Simple and Concise API:**
 
-There are only 7 functions that perform all of the above-mentioned tasks, making it easy to integrate PubChem data into your projects:
+There are functions that perform all of the above-mentioned tasks, making it easy to integrate PubChem data into your projects:
 
+* get_cids_by_formula(formula): Get CIDs by formula
 * get_cid_by_name(name): Get CID by name
 * get_cids_by_name(name): Get all CIDs by name
 * get_image_by_cid(cid): Get 2D image by CID
 * get_image_by_name(name): Get 2D image by name
 * get_structure_by_cid(cid): Get SDF by CID
 * get_structure_by_name(name): Get SDF by name
+* get_similar_structures_cids_by_compound_id(cid/SMILES/InChI): Get similar structures CIDs by cid, SMILES, InChI
+
+**Compound Object:**
+The package also includes a `Compound` object that encapsulates the retrieved data, providing a convenient way
+to access and manipulate the data.
+
 * compound(cid_or_name): Create a compound object with properties and methods
 
 **Getting Started:**
@@ -52,46 +59,90 @@ Install PubChemQuery with pip
   pip install pubchemquery
 ```
 
-## Documentation
+## Examples
+
+Import package as:
 
 ```python
 import pubchemquery as pcq
+```
 
+Use the functions to retrieve data:
+
+```python
+# get a cid by formula
+cid = pcq.get_cids_by_formula('C6H6')
+print(type(cid), len(cid))
+```
+
+```python
 # get a cid by name
 cid = pcq.get_cid_by_name('benzene')
 print(cid)
+```
 
+```python
 # get all cids by name
 cids = pcq.get_cids_by_name('benzene')
 print(type(cids), len(cids))
+```
 
+```python
 # get 2d image
 image = pcq.get_image_by_cid('241')
-print(image)
+image
+```
 
+```python
 image = pcq.get_image_by_name('benzene')
-print(image)
+image
+```
 
+```python
 # get sdf by cid
 sdf = pcq.get_structure_by_cid('241')
 print(sdf)
+```
 
+```python
 # get sdf by name
 sdf = pcq.get_structure_by_name('benzene')
 print(sdf)
+```
 
-# make a compound by cid
+```python
+# get similar structure cids by cid
+# cids = pcq.get_similar_structures_cids_by_compound_id('241')
+# cids = pcq.get_similar_structures_cids_by_compound_id(
+#     'C1=CC=CC=C1', compound_id='SMILES')
+cids = pcq.get_similar_structures_cids_by_compound_id(
+    'InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H', compound_id='InChI')
+print(type(cids), len(cids))
+```
+
+Make a compound and then get its properties:
+
+```python
+# make a compound
 cid = 2244
-compound = pcq.compound(cid)
+# compound = pcq.compound(cid)
 # name
 name = '2-acetyloxybenzoic acid'
 compound = pcq.compound(name)
 print(compound)
 # properties
+# InChI
 print(compound.InChI)
+# InChIKey
 print(compound.InChIKey)
+# IUPACName
 print(compound.IUPACName)
-print(compound.image)
+# similar structure cids
+print(len(compound.similar_structure_cids))
+# image
+compound.image
+# dataframe
+compound.prop_df()
 ```
 
 ## FAQ
