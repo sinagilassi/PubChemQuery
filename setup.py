@@ -8,7 +8,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
 APP_NAME = 'PubChemQuery'
-VERSION = '1.1.0'
+VERSION = '1.2.0'
 DESCRIPTION = 'A Python Package for Accessing Chemical Information from PubChem (https://pubchem.ncbi.nlm.nih.gov/).'
 LONG_DESCRIPTION = 'PubChemQuery is a Python package that provides a simple and intuitive API for retrieving chemical information from the PubChem database.'
 
@@ -23,7 +23,7 @@ setup(
     long_description=long_description,
     packages=find_packages(exclude=['tests', '*.tests', '*.tests.*']),
     license='MIT',
-    install_requires=['pillow', 'requests', 'urllib3'],
+    install_requires=['pandas', 'pillow', 'requests', 'urllib3'],
     keywords=['python', 'PubChem', 'PubChemAPI', 'PubChemQuery'],
     classifiers=[
         "Development Status :: 1 - Planning",
