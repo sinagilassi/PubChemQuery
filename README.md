@@ -1,5 +1,6 @@
-
 # PubChemQuery
+
+![Downloads](https://img.shields.io/pypi/dm/PubChemQuery) ![PyPI](https://img.shields.io/pypi/v/PubChemQuery) ![License](https://img.shields.io/pypi/l/PubChemQuery)
 
 **PubChemQuery:** A Python Package for Accessing Chemical Information from PubChem
 
