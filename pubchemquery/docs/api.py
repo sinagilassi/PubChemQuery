@@ -4,7 +4,7 @@
 # import packages/modules
 import requests
 import os
-import json
+import pandas as pd
 import io
 import time
 from PIL import Image
@@ -71,6 +71,8 @@ class PubChemAPI:
 
     # image
     _image = None
+    # similarity
+    _similar_structure_cids = []
 
     def __init__(self, compound_cid, compound_name):
         self._compound_cid = compound_cid
@@ -275,6 +277,28 @@ class PubChemAPI:
     @image.setter
     def image(self, value):
         self._image = value
+
+    # similar structure property
+    @property
+    def similar_structure_cids(self):
+        return self._similar_structure_cids
+
+    @similar_structure_cids.setter
+    def similar_structure_cids(self, value):
+        self._similar_structure_cids = []
+        self._similar_structure_cids = [*value]
+
+    def prop_df(self):
+        '''
+        make a dataframe with a compound property
+        '''
+        # series
+        series = pd.Series(self.prop)
+        # dataframe
+        df = series.to_frame()
+        # add index
+        # df.index = range(1, len(self.prop) + 1)
+        return df
 
     def get_IUPACName_by_cid(self, format_type='json'):
         '''
@@ -1099,7 +1123,7 @@ class PubChemAPI:
             print(e)
 
     @ staticmethod
-    def get_cids_by_formula(formula):
+    def get_cids_by_formula(formula) -> list:
         '''
         Search for cids according to a formula
 
@@ -1127,14 +1151,80 @@ class PubChemAPI:
                     resContent = str(resContent).splitlines()
 
                     return resContent
+                elif reqResponse == 400:
+                    print(f"Compound formula '{_formula}' was not found!")
+                    return []
+                elif reqResponse == 404:
+                    print("Bad request!")
+                    return []
                 else:
                     raise Exception('request is refused, try again.')
+            else:
+                print(f"{formula} format is not valid!")
+                return []
 
         except Exception as e:
             print(e)
 
     @ staticmethod
-    def get_similar_cids_by_cid(cid):
+    def get_similar_cids_by_compound_id(val: str, compound_id='cid', similarity_type='fastsimilarity_2d') -> list:
+        '''
+        Retrieves cids by 2D similarity search
+
+        Parameters
+        ----------
+        val : str
+            e.g. 297, 'C1=CC=CC=C1', 'InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H'
+        compound_id : str
+            cid, SMILES, InChI (default: cid)
+        similarity_type : str
+            fastsimilarity_2d, fastsimilarity_3d (default: fastsimilarity_2d)
+
+        Returns
+        -------
+        list
+            cid list
+        '''
+        try:
+            # compound id
+            if compound_id in ['cid', 'SMILES', 'InChI']:
+                _compound_id = str(compound_id).lower()
+            else:
+                _compound_id = 'cid'
+
+            # check cid
+            _val = str(val).strip()
+            if len(_val) > 0:
+
+                # check
+                if _compound_id == 'smiles' or _compound_id == 'cid':
+                    # url
+                    _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/{similarity_type}/{_compound_id}/{_val}/cids/TXT'
+                    # get
+                    res = requests.get(_url)
+                elif _compound_id == 'inchi':
+                    # url
+                    _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/{similarity_type}/{_compound_id}/cids/TXT'
+                    # post
+                    res = requests.post(_url, data={'inchi': _val})
+                # check
+                reqResponse = res.status_code
+                if reqResponse == 200:
+                    resContent = res.text
+                    resContent = str(resContent).splitlines()
+
+                    return resContent
+                elif reqResponse == 404:
+                    print(f"Similar cids for {_val} was not found!")
+                    return []
+                else:
+                    print('request is refused, try again.')
+                    return []
+        except Exception as e:
+            print(e)
+
+    @ staticmethod
+    def get_similar_cids_by_cid(cid: str) -> list:
         '''
         Search for similar cids according to a cid
 
@@ -1161,8 +1251,12 @@ class PubChemAPI:
                     resContent = str(resContent).splitlines()
 
                     return resContent
+                elif reqResponse == 404:
+                    print(f"Similar cids for {_cid} was not found!")
+                    return []
                 else:
-                    raise Exception('request is refused, try again.')
+                    print('request is refused, try again.')
+                    return []
         except Exception as e:
             print(e)
 
