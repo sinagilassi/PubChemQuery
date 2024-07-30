@@ -69,6 +69,9 @@ class PubChemAPI:
         "Fingerprint2D": None
     }
 
+    # image
+    _image = None
+
     def __init__(self, compound_cid, compound_name):
         self._compound_cid = compound_cid
         self._compound_name = compound_name
@@ -263,6 +266,15 @@ class PubChemAPI:
     @property
     def Fingerprint2D(self):
         return self.prop["Fingerprint2D"]
+
+    # image property
+    @property
+    def image(self):
+        return self._image
+
+    @image.setter
+    def image(self, value):
+        self._image = value
 
     def get_IUPACName_by_cid(self, format_type='json'):
         '''
@@ -617,11 +629,20 @@ class PubChemAPI:
 
         Returns
         -------
-        bool
-            file content
+        str
+            sdf string
         '''
         try:
-            _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}/{file_format}?record_type={record_type}'
+            # file extension
+            file_extension = "sdf"
+            if file_format == "SDF":
+                file_extension = "sdf"
+
+            # cid
+            _cid = str(cid).strip()
+
+            # url
+            _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/{file_format}?record_type={record_type}'
 
             if len(str(cid)) > 0:
                 res = requests.get(_url)
@@ -632,7 +653,10 @@ class PubChemAPI:
                     # content
                     sdfContent = res.text
                     # save a string file
-                    fileName = f'cid_{str(cid)}.{file_format.lower()}'
+                    fileName = f'cid - {_cid}.{file_extension}'
+                    # check
+                    if location == '':
+                        location = os.getcwd()
                     fileLoc = os.path.join(location, fileName)
 
                     # check
@@ -642,9 +666,13 @@ class PubChemAPI:
                         file.write(sdfContent)
                         file.close()
                         print(
-                            f"SDF file is successfully created and saved in `{fileLoc}`")
+                            f"{file_format} file {fileName} is successfully saved in `{fileLoc}`")
                     # res
                     return sdfContent
+                elif reqResponse == 404:
+                    print(
+                        f"{file_format} file of compound id `{_cid}` is not found.")
+                    return "Not Found!"
                 else:
                     raise Exception('request is refused, try again.')
 
@@ -694,7 +722,6 @@ class PubChemAPI:
                 raise Exception("file location does not exist.")
 
             for i in range(cidsSize):
-
                 # manage request time
                 time.sleep(0.5)
 
@@ -743,7 +770,7 @@ class PubChemAPI:
             print(e)
 
     @staticmethod
-    def get_sdf_by_name(name, record_type='3d', save=False, location=''):
+    def get_sdf_by_name(name, file_format='SDF', record_type='3d', save=False, location=''):
         '''
         Query request by name
 
@@ -764,11 +791,17 @@ class PubChemAPI:
             file content
         '''
         try:
+            # compound id
             _name = str(name).strip()
+
+            # file extension
+            file_extension = "sdf"
+            if file_format == "SDF":
+                file_extension = "sdf"
 
             if len(str(_name)) > 0:
 
-                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{_name}/SDF?record_type={record_type}'
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{_name}/{file_format}?record_type={record_type}'
 
                 res = requests.get(_url)
                 # check
@@ -779,23 +812,30 @@ class PubChemAPI:
                     # check
                     if save is True:
                         # save a binary
-                        _fname = str(_name)+"_"+record_type+'.sdf'
+                        _fname = str(_name)+" - "+record_type + \
+                            '.'+file_extension
                         if len(location) == 0:
-                            fileLoc = _fname
-                        else:
-                            fileLoc = os.path.join(location, _fname)
+                            location = os.getcwd()
+                        fileLoc = os.path.join(location, _fname)
 
                         file = open(fileLoc, 'w')
                         file.write(sdfContent)
                         file.close()
-                    return _fname, fileLoc
+                        # log
+                        print(
+                            f"{file_format} file {_fname} is successfully saved in `{fileLoc}`")
+                    return sdfContent
+                elif reqResponse == 404:
+                    print(
+                        f"{file_format} file of compound id `{_name}` is not found.")
+                    return "Not Found!"
                 else:
                     raise Exception('request is refused, try again.')
 
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cid_by_name(name, name_type='word') -> list[str]:
         '''
         Get cid by searching name
@@ -809,8 +849,8 @@ class PubChemAPI:
 
         Returns
         -------
-        list
-            cid  
+        str
+            cid
         '''
         try:
             _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{name}/cids/TXT?name_type={name_type}'
@@ -823,15 +863,21 @@ class PubChemAPI:
                 if reqResponse == 200:
                     resContent = res.text
                     resContent = str(resContent).splitlines()
+                    # check
+                    if resContent is None:
+                        return []
 
                     return resContent
+                elif reqResponse == 404:
+                    return []
                 else:
-                    raise Exception('request is refused, try again.')
+                    print('request is refused, try again.')
+                    return []
 
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_sid_by_name(name):
         '''
         Get sids by searching name
@@ -865,7 +911,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_structure_image(name='', cid='', record_type='2d', image_size=''):
         '''
         Get compound structure image
@@ -916,8 +962,8 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
-    def get_structure_image_2d(name='', cid=0, image_size=''):
+    @ staticmethod
+    def get_structure_image(name='', cid=0, image_format='2d', image_size=''):
         '''
         Get compound structure image
 
@@ -927,6 +973,8 @@ class PubChemAPI:
             compound name
         cid : str
             compound id
+        image_format : str
+            3d, 2d (default: 2d)
         image_size : str
             small, large, 250x250
 
@@ -936,13 +984,18 @@ class PubChemAPI:
             image
         '''
         try:
+            # check image format
+            _image_format = str(image_format).strip()
+            if _image_format not in ["2d", "3d"]:
+                raise Exception("image format is not valid!")
+
             # check
             if len(name) > 0:
                 _name = name.strip()
-                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{_name}/PNG?record_type=2d&image_size={image_size}'
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{_name}/PNG?record_type={_image_format}&image_size={image_size}'
             elif cid != 0:
                 _cid = str(cid).strip()
-                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/PNG?record_type=2d&image_size={image_size}'
+                _url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{_cid}/PNG?record_type={_image_format}&image_size={image_size}'
 
             res = requests.get(_url)
             # check
@@ -953,12 +1006,14 @@ class PubChemAPI:
                 in_memory_file = io.BytesIO(resContent)
                 im = Image.open(in_memory_file)
                 return im
+            elif reqResponse == 404:
+                return None
             else:
                 raise Exception('request is refused, try again.')
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_properties_by_cid(cid, properties=[], format_type="json"):
         '''
         Display compound structure as an image
@@ -1043,7 +1098,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_formula(formula):
         '''
         Search for cids according to a formula
@@ -1078,7 +1133,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_similar_cids_by_cid(cid):
         '''
         Search for similar cids according to a cid
@@ -1111,7 +1166,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_identity(cid, mode=0):
         '''
         Search for cids according to an identity
@@ -1166,7 +1221,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_2d_similarity(cid,  max_records="all", threshold=90):
         '''
         Search for cids according to an 2d similarity
@@ -1216,7 +1271,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_3d_similarity(cid, max_records=all, threshold=90):
         '''
         Search for cids according to an 2d similarity
@@ -1261,7 +1316,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_structure_type(cid, structure_type=1, max_records='all'):
         '''
         Search for cids according to an cid [Substructure / Superstructure]
@@ -1313,7 +1368,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_smiles_structure(smiles, max_records=all):
         '''
         Search for cids according to an smiles [Substructure / Superstructure]
@@ -1354,7 +1409,7 @@ class PubChemAPI:
         except Exception as e:
             print(e)
 
-    @staticmethod
+    @ staticmethod
     def get_cids_by_molecular_formula(molecular_formula, max_records="all", allow_other_elements=True):
         '''
         Search for cids according to a molecular formula
