@@ -5,7 +5,7 @@ import pubchemquery as pcq
 # print(cid)
 
 # get all cids by name
-# cids = pcq.get_cids_by_name('benzene1')
+# cids = pcq.get_cids_by_name('benzene')
 # print(type(cids), len(cids))
 
 # get 2d image

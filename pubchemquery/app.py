@@ -52,7 +52,7 @@ def get_cids_by_name(name) -> list[str]:
     '''
     try:
         res = PubChemAPI.get_cid_by_name(name, name_type='word')
-        res = res if len(res) == 0 else []
+        res = res if len(res) != 0 else []
         # log
         if len(res) == 0:
             print("Not Found!")
