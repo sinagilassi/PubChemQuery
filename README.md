@@ -32,6 +32,7 @@ Easy-to-use API with minimal code required
 
 There are functions that perform all of the above-mentioned tasks, making it easy to integrate PubChem data into your projects:
 
+* get_cid_by_inchi(inchi): Get a CID by InChI
 * get_cids_by_formula(formula): Get CIDs by formula
 * get_cid_by_name(name): Get CID by name
 * get_cids_by_name(name): Get all CIDs by name
@@ -56,7 +57,7 @@ To use PubChemQuery, simply install the package and import it into your Python s
 Install PubChemQuery with pip
 
 ```python
-  pip install pubchemquery
+  pip install PubChemQuery
 ```
 
 ## Examples
@@ -73,6 +74,13 @@ Use the functions to retrieve data:
 # get a cid by formula
 cid = pcq.get_cids_by_formula('C6H6')
 print(type(cid), len(cid))
+```
+
+```python
+# get a cid by inchi
+cid = pcq.get_cid_by_inchi(
+    'InChI=1S/C6H5NO3/c8-6-3-1-5(2-4-6)7(9)10/h1-4,8H')
+print(cid)
 ```
 
 ```python
