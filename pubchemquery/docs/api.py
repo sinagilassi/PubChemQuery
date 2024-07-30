@@ -292,12 +292,22 @@ class PubChemAPI:
         '''
         make a dataframe with a compound property
         '''
-        # series
-        series = pd.Series(self.prop)
-        # dataframe
-        df = series.to_frame()
-        # add index
+        # # series
+        # series = pd.Series(self.prop)
+        # # dataframe
+        # df = series.to_frame()
+        # # Add index from 1 to length of prop
         # df.index = range(1, len(self.prop) + 1)
+
+        # # Add columns
+        # df.columns = ['Property', 'Value']
+        # Create a pandas DataFrame
+        df = pd.DataFrame(list(self.prop.items()),
+                          columns=['Property', 'Value'])
+
+        # Add index from 1 to length of prop
+        df.index = range(1, len(self.prop) + 1)
+
         return df
 
     def get_IUPACName_by_cid(self, format_type='json'):
