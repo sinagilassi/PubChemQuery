@@ -32,15 +32,15 @@ Easy-to-use API with minimal code required
 
 There are functions that perform all of the above-mentioned tasks, making it easy to integrate PubChem data into your projects:
 
-* get_cid_by_inchi(inchi): Get a CID by InChI
-* get_cids_by_formula(formula): Get CIDs by formula
-* get_cid_by_name(name): Get CID by name
-* get_cids_by_name(name): Get all CIDs by name
-* get_image_by_cid(cid): Get 2D image by CID
-* get_image_by_name(name): Get 2D image by name
-* get_structure_by_cid(cid): Get SDF by CID
-* get_structure_by_name(name): Get SDF by name
-* get_similar_structures_cids_by_compound_id(cid/SMILES/InChI): Get similar structures CIDs by cid, SMILES, InChI
+* `get_cid_by_inchi(inchi)`: Get a CID by InChI
+* `get_cids_by_formula(formula)`: Get CIDs by formula
+* `get_cid_by_name(name)`: Get CID by name
+* `get_cids_by_name(name)`: Get all CIDs by name
+* `get_image_by_cid(cid)`: Get 2D image by CID
+* `get_image_by_name(name)`: Get 2D image by name
+* `get_structure_by_cid(cid)`: Get SDF by CID
+* `get_structure_by_name(name)`: Get SDF by name
+* `get_similar_structures_cids_by_compound_id(cid/SMILES/InChI)`: Get similar structures CIDs by cid, SMILES, InChI
 
 **Compound Object:**
 The package also includes a `Compound` object that encapsulates the retrieved data, providing a convenient way
