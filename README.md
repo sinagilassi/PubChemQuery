@@ -38,6 +38,7 @@ There are functions that perform all of the above-mentioned tasks, making it eas
 * `get_cids_by_name(name)`: Get all CIDs by name
 * `get_image_by_cid(cid)`: Get 2D image by CID
 * `get_image_by_name(name)`: Get 2D image by name
+* `get_image_by_inchi(inchi)`: Get 2D image by InChI
 * `get_structure_by_cid(cid)`: Get SDF by CID
 * `get_structure_by_name(name)`: Get SDF by name
 * `get_similar_structures_cids_by_compound_id(cid/SMILES/InChI)`: Get similar structures CIDs by cid, SMILES, InChI
@@ -46,7 +47,7 @@ There are functions that perform all of the above-mentioned tasks, making it eas
 The package also includes a `Compound` object that encapsulates the retrieved data, providing a convenient way
 to access and manipulate the data.
 
-* compound(cid_or_name): Create a compound object with properties and methods
+* `compound(cid_or_name)`: Create a compound object with properties and methods
 
 **Getting Started:**
 
@@ -97,13 +98,18 @@ print(type(cids), len(cids))
 
 ```python
 # get 2d image
+# by cid
 image = pcq.get_image_by_cid('241')
 image
-```
 
-```python
+# by name
 image = pcq.get_image_by_name('benzene')
 image
+
+# by inchi
+image = pcq.get_image_by_inchi(
+    'InChI=1S/C6H5NO3/c8-6-3-1-5(2-4-6)7(9)10/h1-4,8H')
+print(image)
 ```
 
 ```python
