@@ -31,7 +31,7 @@ def get_cid_by_inchi(inchi: str):
         res = PubChemAPI.get_cids_by_inchi(inchi)
         if len(res) == 0:
             return "Not Found!"
-        res = res[0] if len(res) == 1 else res
+        res = str(res[0]) if len(res) == 1 else res
         return res
     except Exception as e:
         print(e)
@@ -238,6 +238,42 @@ def get_image_by_name(name, image_format='2d', image_size='large'):
     '''
     try:
         return PubChemAPI.get_structure_image(name=name, image_format=image_format, image_size=image_size)
+    except Exception as e:
+        print(e)
+
+
+def get_image_by_inchi(inchi: str, image_format='2d', image_size='large'):
+    '''
+    Get compound structure image by inchi
+
+    Parameters
+    ----------
+    inchi : str
+        compound inchi
+    image_format : str
+        3d, 2d (default: 2d)
+    image_size : str
+        small, large, 250x250
+
+    Returns
+    -------
+    PIL.Image
+        cid image
+    '''
+    try:
+        # get cid
+        cid = get_cid_by_inchi(inchi)
+        # sleep
+        time.sleep(0.5)
+        # check
+        if isinstance(cid, list):
+            cid = cid[0]
+        elif isinstance(cid, int) or isinstance(cid, str):
+            cid = str(cid)
+        else:
+            return None
+        # get image
+        return PubChemAPI.get_structure_image(cid=int(cid), image_format=image_format, image_size=image_size)
     except Exception as e:
         print(e)
 

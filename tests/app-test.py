@@ -1,9 +1,9 @@
 import pubchemquery as pcq
 
 # get a cid by inchi
-cid = pcq.get_cid_by_inchi(
-    'InChI=1S/C6H5NO3/c8-6-3-1-5(2-4-6)7(9)10/h1-4,8H')
-print(cid)
+# cid = pcq.get_cid_by_inchi(
+#     'InChI=1S/C6H5NO3/c8-6-3-1-5(2-4-6)7(9)10/h1-4,8H')
+# print(cid)
 
 # get a cid by formula
 # cid = pcq.get_cids_by_formula('C6H6')
@@ -23,6 +23,10 @@ print(cid)
 
 # image = pcq.get_image_by_name('benzene')
 # print(image)
+
+image = pcq.get_image_by_inchi(
+    'InChI=1S/C6H5NO3/c8-6-3-1-5(2-4-6)7(9)10/h1-4,8H')
+print(image)
 
 # get sdf by cid
 # sdf = pcq.get_structure_by_cid('241')
