@@ -18,14 +18,11 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install sphinx sphinx_rtd_theme myst_parser
-      - name: Sphinx build
-        run: sphinx-build doc _build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        with:
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
-          force_orphan: true
+      - run: pip install mkdocs-material  
+      - run: pip install mkdocstrings
+      - run: pip install mkdocstrings[python]
+      - run: pip install mkdocs-material-extensions
+      - run: pip install mkdocs-awesome-pages-plugin
+      - run: pip install mkdocs-include-markdown-plugin
+      - run: pip install pillow cairosvg
+      - run: mkdocs gh-deploy --force
