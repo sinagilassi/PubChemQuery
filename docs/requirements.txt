@@ -125,3 +125,5 @@ wheel==0.42.0
     # via sphinx-togglebutton
 
 pandas==2.2.2
+# pubchemquery
+pubchemquery==1.5.0
