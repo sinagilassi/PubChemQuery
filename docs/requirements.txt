@@ -123,3 +123,5 @@ urllib3==2.1.0
     # via requests
 wheel==0.42.0
     # via sphinx-togglebutton
+
+pandas==2.2.2
