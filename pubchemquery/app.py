@@ -83,7 +83,7 @@ def get_cid_by_name(name) -> str:
         res = res[0] if len(res) == 1 else "Not Found!"
         return res
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_cids_by_name(name) -> list[str]:
@@ -109,7 +109,7 @@ def get_cids_by_name(name) -> list[str]:
             print("Not Found!")
         return res
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_structure_by_cid(cid, file_format='SDF', record_type='3d', save_file=False, file_dir=''):
@@ -137,7 +137,7 @@ def get_structure_by_cid(cid, file_format='SDF', record_type='3d', save_file=Fal
     try:
         return PubChemAPI.get_sdf_by_cid(cid, file_format=file_format, record_type=record_type, save=save_file, location=file_dir)
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_similar_structures_cids_by_compound_id(val, compound_id='cid', similarity_type='fastsimilarity_2d') -> list:
@@ -164,7 +164,7 @@ def get_similar_structures_cids_by_compound_id(val, compound_id='cid', similarit
         res = res if len(res) != 0 else []
         return res
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_structure_by_name(name, file_format='SDF', record_type='3d', save_file=False, file_dir=''):
@@ -192,7 +192,7 @@ def get_structure_by_name(name, file_format='SDF', record_type='3d', save_file=F
     try:
         return PubChemAPI.get_sdf_by_name(name, file_format=file_format, record_type=record_type, save=save_file, location=file_dir)
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_image_by_cid(cid, image_format='2d', image_size='large'):
@@ -216,7 +216,7 @@ def get_image_by_cid(cid, image_format='2d', image_size='large'):
     try:
         return PubChemAPI.get_structure_image(cid=int(cid), image_format=image_format, image_size=image_size)
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_image_by_name(name, image_format='2d', image_size='large'):
@@ -240,7 +240,7 @@ def get_image_by_name(name, image_format='2d', image_size='large'):
     try:
         return PubChemAPI.get_structure_image(name=name, image_format=image_format, image_size=image_size)
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_image_by_inchi(inchi: str, image_format='2d', image_size='large'):
@@ -276,7 +276,7 @@ def get_image_by_inchi(inchi: str, image_format='2d', image_size='large'):
         # get image
         return PubChemAPI.get_structure_image(cid=int(cid), image_format=image_format, image_size=image_size)
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def compound(id: str, image_format='2d', image_size='large', similarity_type='fastsimilarity_2d'):
@@ -375,7 +375,7 @@ def compound(id: str, image_format='2d', image_size='large', similarity_type='fa
         else:
             raise Exception(f"{cid}/{name} format is not valid!")
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 if __name__ == "__main__":
