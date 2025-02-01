@@ -6,15 +6,43 @@ import re
 import time
 from typing import List, Union, Dict, Optional, Literal
 # local
-from .docs import PubChemAPI
-from .docs import __version__, __author__
+from .docs import PubChemAPI, __version__, __author__
 
 
 def main():
     print(f'PubChemQuery {__version__}')
 
 
-def get_cid_by_inchi(inchi: str):
+def get_cid_by_inchi(inchi: str, res_message: str = '', res_format: Literal['str', 'json', 'dict'] = 'str'):
+    '''
+    Get a cid (only one) by inchi
+
+    Parameters
+    ----------
+    inchi : str
+        e.g. InChI=1S/C3H8/c1-3-2/h3H2,1-2H3
+
+    Returns
+    -------
+    str
+        component cid
+    '''
+    try:
+        resp = PubChemAPI.get_cids_by_inchi(inchi)
+        if len(resp) == 0:
+            res = "Not Found!"
+        elif len(resp) == 1:
+            res = str(resp[0])
+        else:
+            res = "There are multiple cids!, check get_cids_by_inchi() to get all cids."
+
+        # check
+
+    except Exception as e:
+        raise Exception(f"Error: {e}")
+
+
+def get_cids_by_inchi(inchi: str, res_message: str = ''):
     '''
     Get a cid (only one) by inchi
 
@@ -33,6 +61,32 @@ def get_cid_by_inchi(inchi: str):
         if len(res) == 0:
             return "Not Found!"
         res = str(res[0]) if len(res) == 1 else res
+        return res
+    except Exception as e:
+        raise Exception(f"Error: {e}")
+
+
+def get_cid_by_formula(formula: str) -> str:
+    '''
+    Get a cid by formula
+    for instance, CH4
+
+    Parameters
+    ----------
+    formula : str
+        compound formula (https://pubchem.ncbi.nlm.nih.gov/)
+
+    Returns
+    -------
+    res: str
+        component cid
+    '''
+    try:
+        res = PubChemAPI.get_cids_by_formula(formula)
+        if len(res) == 0:
+            return "Not Found!"
+        res = res[0] if len(
+            res) == 1 else 'There are multiple cids!, check get_cids_by_formula() to get all cids.'
         return res
     except Exception as e:
         raise Exception(f"Error: {e}")
@@ -57,7 +111,7 @@ def get_cids_by_formula(formula: str):
         res = PubChemAPI.get_cids_by_formula(formula)
         if len(res) == 0:
             return "Not Found!"
-        res = res[0] if len(res) == 1 else res
+
         return res
     except Exception as e:
         raise Exception(f"Error: {e}")

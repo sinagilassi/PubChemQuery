@@ -9,6 +9,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 APP_NAME = 'PubChemQuery'
 VERSION = '1.6.0'
+AUTHOR = 'Sina Gilassi'
 DESCRIPTION = 'A Python Package for Accessing Chemical Information from PubChem (https://pubchem.ncbi.nlm.nih.gov/).'
 LONG_DESCRIPTION = 'PubChemQuery is a Python package that provides a simple and intuitive API for retrieving chemical information from the PubChem database.'
 
@@ -16,16 +17,16 @@ LONG_DESCRIPTION = 'PubChemQuery is a Python package that provides a simple and 
 setup(
     name=APP_NAME,
     version=VERSION,
-    author="Sina Gilassi",
+    author=AUTHOR,
     author_email="<sina.gilassi@gmail.com>",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
     long_description=long_description,
     packages=find_packages(exclude=['tests', '*.tests', '*.tests.*']),
     license='MIT',
-    install_requires=['pandas', 'pillow', 'requests', 'urllib3'],
+    install_requires=['pandas', 'pillow', 'requests', 'urllib3', 'numpy'],
     keywords=['python', 'PubChem', 'PubChemAPI',
-              'PubChemQuery', 'pubchemquery'],
+              'PubChemQuery', 'pubchemquery', 'Chemistry', 'Molecular Properties'],
     classifiers=[
         "Development Status :: 1 - Planning",
         "Intended Audience :: Education",

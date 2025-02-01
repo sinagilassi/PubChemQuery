@@ -4,6 +4,7 @@
 # import packages/modules
 import os
 import json
+from typing import Union, Dict, Optional, List, Tuple, Any
 # local
 from .config import CID_FILE_PREFIX
 
@@ -74,6 +75,39 @@ class CoreUtility():
             return True
         except Exception as e:
             print(e)
+
+    @staticmethod
+    def generate_result(param_name: str,
+                        res_value: Union[str, float, List, Dict[str, Any]],
+                        res_message: str) -> Dict[str, Union[str, float, List, Dict[str, Any]]]:
+        '''
+        Generate a result
+
+        Parameters
+        ----------
+        param_name : str
+            parameter name
+        res_value : any
+            result value
+        res_message : str
+            result message
+
+        Returns
+        -------
+        dict
+            result
+        '''
+        try:
+            # set
+            result = {
+                'name': param_name,
+                'value': res_value,
+                'message': res_message
+            }
+            # res
+            return result
+        except Exception as e:
+            raise Exception(f"result generation error: {e}")
 
 
 class UtilityAPI():
