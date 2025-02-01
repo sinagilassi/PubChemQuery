@@ -288,7 +288,7 @@ class PubChemAPI:
         self._similar_structure_cids = []
         self._similar_structure_cids = [*value]
 
-    def prop_df(self):
+    def prop_df(self) -> pd.DataFrame:
         '''
         make a dataframe with a compound property
         '''
@@ -310,7 +310,7 @@ class PubChemAPI:
 
         return df
 
-    def get_IUPACName_by_cid(self, format_type='json'):
+    def get_IUPACName_by_cid(self, format_type: str = 'json'):
         '''
         Get IUPACName by cid
 
@@ -1220,7 +1220,7 @@ class PubChemAPI:
                 return []
 
         except Exception as e:
-            print(e)
+            raise Exception(e)
 
     @staticmethod
     def get_similar_cids_by_compound_id(val: str, compound_id='cid', similarity_type='fastsimilarity_2d') -> list:

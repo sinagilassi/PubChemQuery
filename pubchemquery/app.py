@@ -4,9 +4,10 @@
 # import packages/modules
 import re
 import time
+from typing import List, Union, Dict, Optional, Literal
 # local
 from .docs import PubChemAPI
-from .docs import __version__
+from .docs import __version__, __author__
 
 
 def main():
@@ -34,10 +35,10 @@ def get_cid_by_inchi(inchi: str):
         res = str(res[0]) if len(res) == 1 else res
         return res
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
-def get_cids_by_formula(formula):
+def get_cids_by_formula(formula: str):
     '''
     Get all cids by formula
     for instance, CH4
@@ -59,7 +60,7 @@ def get_cids_by_formula(formula):
         res = res[0] if len(res) == 1 else res
         return res
     except Exception as e:
-        print(e)
+        raise Exception(f"Error: {e}")
 
 
 def get_cid_by_name(name) -> str:
@@ -75,7 +76,7 @@ def get_cid_by_name(name) -> str:
     Returns
     -------
     str
-        cid  
+        cid
     '''
     try:
         res = PubChemAPI.get_cid_by_name(name, name_type='complete')
@@ -98,7 +99,7 @@ def get_cids_by_name(name) -> list[str]:
     Returns
     -------
     list[str]
-        cid list 
+        cid list
     '''
     try:
         res = PubChemAPI.get_cid_by_name(name, name_type='word')
