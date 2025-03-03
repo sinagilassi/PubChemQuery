@@ -128,11 +128,14 @@ print(sdf)
 
 ```python
 # get similar structure cids by cid
-# cids = pcq.get_similar_structures_cids_by_compound_id('241')
-# cids = pcq.get_similar_structures_cids_by_compound_id(
-#     'C1=CC=CC=C1', compound_id='SMILES')
+cids = pcq.get_similar_structures_cids_by_compound_id('241')
+
+cids = pcq.get_similar_structures_cids_by_compound_id(
+     'C1=CC=CC=C1', compound_id='SMILES')
+
 cids = pcq.get_similar_structures_cids_by_compound_id(
     'InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H', compound_id='InChI')
+
 print(type(cids), len(cids))
 ```
 
@@ -141,11 +144,12 @@ Make a compound and then get its properties:
 ```python
 # make a compound
 cid = 2244
-# compound = pcq.compound(cid)
+compound = pcq.compound(cid)
 # name
 name = '2-acetyloxybenzoic acid'
 compound = pcq.compound(name)
 print(compound)
+
 # properties
 # InChI
 print(compound.InChI)
@@ -155,8 +159,10 @@ print(compound.InChIKey)
 print(compound.IUPACName)
 # similar structure cids
 print(len(compound.similar_structure_cids))
+
 # image
 compound.image
+
 # dataframe
 compound.prop_df()
 ```
